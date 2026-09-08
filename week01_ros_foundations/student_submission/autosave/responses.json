@@ -16,6 +16,53 @@
         "changed": true,
         "normal": true
       }
+    },
+    "part_2.activity": {
+      "behavior": {
+        "changed": true,
+        "normal": true
+      },
+      "deliberative": {
+        "changed": true,
+        "normal": true
+      },
+      "hybrid": {
+        "changed": true,
+        "normal": true
+      },
+      "reactive": {
+        "changed": true,
+        "normal": true
+      },
+      "safety": {
+        "changed": true,
+        "normal": true
+      }
+    },
+    "part_3.activity": {
+      "communication": {
+        "service": true,
+        "topic": true
+      },
+      "failure": {
+        "healthy": true,
+        "sensor": true,
+        "type": true,
+        "visualization": true
+      },
+      "inspection": {
+        "broken": true,
+        "echo": true,
+        "node_info": true,
+        "nodes": true,
+        "services": true,
+        "topic_info": true,
+        "topics": true
+      },
+      "middleware": {
+        "multiple": true,
+        "single": true
+      }
     }
   },
   "schema_version": 1,
@@ -23,5 +70,5 @@
     "email": "sheea.mcfarlane68@login.cuny.edu",
     "name": "Sheea McFarlane"
   },
-  "updated_at": "2026-09-08T20:20:18.578761+00:00"
+  "updated_at": "2026-09-08T21:17:05.283358+00:00"
 }
