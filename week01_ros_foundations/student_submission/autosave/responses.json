@@ -1,0 +1,27 @@
+{
+  "checked_evidence_ids": {},
+  "completed_missions": [],
+  "lab_id": "week01_ros_foundations",
+  "responses": {
+    "part_1.activity": {
+      "hardware": {
+        "changed": true,
+        "normal": true
+      },
+      "sensor": {
+        "changed": true,
+        "normal": true
+      },
+      "timing": {
+        "changed": true,
+        "normal": true
+      }
+    }
+  },
+  "schema_version": 1,
+  "student": {
+    "email": "sheea.mcfarlane68@login.cuny.edu",
+    "name": "Sheea McFarlane"
+  },
+  "updated_at": "2026-09-08T20:20:18.578761+00:00"
+}
