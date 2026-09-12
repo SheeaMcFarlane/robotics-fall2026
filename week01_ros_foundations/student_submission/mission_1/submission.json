@@ -2,18 +2,24 @@
   "schema_version": 1,
   "lab_id": "week01_ros_foundations",
   "mission_id": "mission_1",
-  "saved_at": "2026-09-11T23:47:02.800470+00:00",
+  "saved_at": "2026-09-12T04:12:30.501120+00:00",
   "evidence": {
-    "evidence_id": "dc1f795b429a309a",
+    "evidence_id": "b654184abd86aa46",
     "graph": {
       "schema_version": 2,
-      "captured_at": "2026-09-11T23:47:01.630980+00:00",
+      "captured_at": "2026-09-12T04:12:29.630457+00:00",
       "nodes": [
+        {
+          "name": "/_ros2cli_daemon_24_a7f5bb73924947a1a1c43eb64f07d1e2"
+        },
         {
           "name": "/course_cmd_vel_guard"
         },
         {
           "name": "/course_evidence_collector"
+        },
+        {
+          "name": "/obstacle_guard"
         },
         {
           "name": "/robot_state_publisher"
@@ -123,8 +129,10 @@
             "rcl_interfaces/msg/ParameterEvent"
           ],
           "publishers": [
+            "/_ros2cli_daemon_24_a7f5bb73924947a1a1c43eb64f07d1e2",
             "/course_cmd_vel_guard",
             "/course_evidence_collector",
+            "/obstacle_guard",
             "/robot_state_publisher",
             "/ros_gz_bridge",
             "/rviz2"
@@ -152,8 +160,10 @@
             "rcl_interfaces/msg/Log"
           ],
           "publishers": [
+            "/_ros2cli_daemon_24_a7f5bb73924947a1a1c43eb64f07d1e2",
             "/course_cmd_vel_guard",
             "/course_evidence_collector",
+            "/obstacle_guard",
             "/robot_state_publisher",
             "/ros_gz_bridge",
             "/rviz2",
@@ -170,7 +180,8 @@
             "/ros_gz_bridge"
           ],
           "subscribers": [
-            "/course_evidence_collector"
+            "/course_evidence_collector",
+            "/obstacle_guard"
           ]
         },
         {
@@ -178,7 +189,9 @@
           "types": [
             "geometry_msgs/msg/Twist"
           ],
-          "publishers": [],
+          "publishers": [
+            "/obstacle_guard"
+          ],
           "subscribers": [
             "/course_cmd_vel_guard",
             "/course_evidence_collector"
@@ -291,6 +304,48 @@
         },
         {
           "name": "/course_evidence_collector/set_parameters_atomically",
+          "types": [
+            "rcl_interfaces/srv/SetParametersAtomically"
+          ]
+        },
+        {
+          "name": "/obstacle_guard/describe_parameters",
+          "types": [
+            "rcl_interfaces/srv/DescribeParameters"
+          ]
+        },
+        {
+          "name": "/obstacle_guard/get_parameter_types",
+          "types": [
+            "rcl_interfaces/srv/GetParameterTypes"
+          ]
+        },
+        {
+          "name": "/obstacle_guard/get_parameters",
+          "types": [
+            "rcl_interfaces/srv/GetParameters"
+          ]
+        },
+        {
+          "name": "/obstacle_guard/get_type_description",
+          "types": [
+            "type_description_interfaces/srv/GetTypeDescription"
+          ]
+        },
+        {
+          "name": "/obstacle_guard/list_parameters",
+          "types": [
+            "rcl_interfaces/srv/ListParameters"
+          ]
+        },
+        {
+          "name": "/obstacle_guard/set_parameters",
+          "types": [
+            "rcl_interfaces/srv/SetParameters"
+          ]
+        },
+        {
+          "name": "/obstacle_guard/set_parameters_atomically",
           "types": [
             "rcl_interfaces/srv/SetParametersAtomically"
           ]
@@ -442,31 +497,36 @@
           "angle_increment": 0.01749303564429283,
           "sample_count": 360,
           "finite_count": 327,
-          "minimum_finite_range": 0.5018667578697205
+          "minimum_finite_range": 0.4422782361507416
         },
         "/odom": {
           "frame_id": "odom",
           "child_frame_id": "base_footprint",
           "position": {
-            "x": 9.600784784344232e-09,
-            "y": -2.2140387631579256e-21
+            "x": 3.87307099897752,
+            "y": -1.8118094215912197
           },
           "orientation": {
-            "x": 0.0,
+            "x": -0.0,
             "y": 0.0,
-            "z": -2.3024910065510164e-13,
-            "w": 1.0
+            "z": 0.2758858481410754,
+            "w": -0.961190407149114
           },
-          "linear_x": 1.0672780571526695e-17,
-          "angular_z": -1.3534742772898915e-17
+          "linear_x": 0.0,
+          "angular_z": 0.0
         },
-        "/student_cmd_vel": null
+        "/student_cmd_vel": {
+          "linear_x": 0.0,
+          "angular_z": 0.0
+        }
       }
     },
     "stable_graph": {
       "nodes": [
+        "/_ros2cli_daemon_24_a7f5bb73924947a1a1c43eb64f07d1e2",
         "/course_cmd_vel_guard",
         "/course_evidence_collector",
+        "/obstacle_guard",
         "/robot_state_publisher",
         "/ros_gz_bridge",
         "/rviz2",
@@ -567,8 +627,10 @@
             "rcl_interfaces/msg/ParameterEvent"
           ],
           [
+            "/_ros2cli_daemon_24_a7f5bb73924947a1a1c43eb64f07d1e2",
             "/course_cmd_vel_guard",
             "/course_evidence_collector",
+            "/obstacle_guard",
             "/robot_state_publisher",
             "/ros_gz_bridge",
             "/rviz2"
@@ -596,8 +658,10 @@
             "rcl_interfaces/msg/Log"
           ],
           [
+            "/_ros2cli_daemon_24_a7f5bb73924947a1a1c43eb64f07d1e2",
             "/course_cmd_vel_guard",
             "/course_evidence_collector",
+            "/obstacle_guard",
             "/robot_state_publisher",
             "/ros_gz_bridge",
             "/rviz2",
@@ -614,7 +678,8 @@
             "/ros_gz_bridge"
           ],
           [
-            "/course_evidence_collector"
+            "/course_evidence_collector",
+            "/obstacle_guard"
           ]
         ],
         [
@@ -622,7 +687,9 @@
           [
             "geometry_msgs/msg/Twist"
           ],
-          [],
+          [
+            "/obstacle_guard"
+          ],
           [
             "/course_cmd_vel_guard",
             "/course_evidence_collector"

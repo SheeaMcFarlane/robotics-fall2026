@@ -63,11 +63,11 @@ The measured motion compared to my prediction isn't far off, my prediction being
 
 ## mission_2.prediction_locks
 
-{'straight': '2026-09-11T23:54:20.245583+00:00', 'rotation': '2026-09-12T00:12:05.312446+00:00', 'curve': '2026-09-12T00:18:14.985303+00:00', 'curve_modified': '2026-09-12T00:22:35.655688+00:00'}
+{'curve': '2026-09-12T00:18:14.985303+00:00', 'curve_modified': '2026-09-12T00:22:35.655688+00:00', 'rotation': '2026-09-12T00:12:05.312446+00:00', 'straight': '2026-09-11T23:54:20.245583+00:00'}
 
 ## mission_2.predictions
 
-{'straight': 'I predict the robot will travel 0.45m from the starting point.', 'rotation': "I predict its position will be the same while it's direction will be 1.50rad to the left of the current direction. ", 'curve': "I predict a curve because it's turning to the right 0.6m and moving forward 1.6rad ", 'curve_modified': 'This curve should be tighter, wider, or turn the other way because the turning speed is positive and the forward speed is positive.'}
+{'curve': "I predict a curve because it's turning to the right 0.6m and moving forward 1.6rad ", 'curve_modified': 'This curve should be tighter, wider, or turn the other way because the turning speed is positive and the forward speed is positive.', 'rotation': "I predict its position will be the same while it's direction will be 1.50rad to the left of the current direction. ", 'straight': 'I predict the robot will travel 0.45m from the starting point.'}
 
 ## mission_2.safety_explanation
 
