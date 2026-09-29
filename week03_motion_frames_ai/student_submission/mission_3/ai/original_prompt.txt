@@ -1,0 +1,17 @@
+Write a complete,  ROS 2 Python code that commands a mobile robot to drive a closed rounded rectangle path and stops cleanly once completed.
+
+Inputs & Parameters:
+- length (total length of the rectangle layout)
+- width (total width of the rectangle layout)
+- radius (turning radius for corner arcs)
+- linear_velocity_max (velocity limit for moving straight)
+- angular_velocity_max  (velocity limit for rotating)
+Coordinate Conventions
+-X-axis is forward, Y-axis is left, and turning is counter-clockwise
+Velocity:
+- Straight line segments must move at max_linear_velocity and curved corner arcs must move at the linear speed to strictly satisfy the rolling arc equation: v = angular_velocity * radius.
+Output Requirements:
+- Continually publish  velocity messages to the '/cmd_vel' at a stable rate of 10Hz.
+Stopping Behavior & Loop Closure Test:
+- Once the final 4th arc is completed, the node must immediately publish zero velocities (linear.x = 0.0, angular.z = 0.0) to bring the robot to a complete halt.
+

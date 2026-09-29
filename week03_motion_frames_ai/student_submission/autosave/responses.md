@@ -1,0 +1,593 @@
+# Week 3: Motion, Frames, and AI-Assisted ROS Development
+
+## Student
+
+- Course Id: CSCI 39536
+- Email: sheea.mcfarlane68@login.cuny.edu
+- Name: Sheea McFarlane
+
+## concept.arc
+
+A nonzero linear and angular velocity produce an arc when both the velocity is constant rate because it moving forward and turning at a constant rate, maintaining a fixed turning radius causes an arc to be formed.
+
+## concept.model_limits
+
+One assumption in this motion model that a robot may violate is that floor texture won't have an impact on it's trajectory.
+
+## concept.velocity_pose
+
+The velocity command requires a duration to predict pose because one if time is not passing nothing is happening and two if the predicted pose id based on when/ when the robot stops not just what it's doing. In other words to predict a final position it needs to integrate that velocity over a specific time frame.
+
+## final.ai_judgment
+
+I simplified the original AI code and I tested the code .
+
+## final.course_reflection
+
+This activity has got me excited about what you can have the robots even with a few straight drives and turns. I learned that I won't just be writing code, and testing it, it is also important for me to use math to maintain velocity correctness. What stood out to me was that the robot may not actually move based how the math predict, calculations don't always guarantee the correct results. Another thing that might affect the correct drive path is speed and timing, a small change in speed and timing can effect the path. This amplifies how important testing and debugging is, the guarantee the correct drive path. In addition, I also learned that AI can be helpful when working on a project, but I cannot just trust the AI without checking its work. I tested the code, looked at the results, and made sure it followed the assignment requirements.  I like that I can program something that can be used to control something physical and see the results in the real world. The one thing that stood out to me during this activity was how much I struggled with compiling and testing the program. At first, I had problems with the test files not being found and with ROS saying that no tests had run. I had to figure out where the files were located and how to run the tests correctly. After making the changes and testing again, I was able to get all 7 tests to pass. I always have to remember that a lot of time will be spent finding errors and figuring out why something is not working. It was frustrating at first, it normally is, but got through it by reading the error messages and testing each step. 
+
+## final.frame_insight
+
+I think the biggest mistake would be getting the turning direction wrong. I need to remember that X is forward, Y is left, and positive turning is counter-clockwise I keep having to check just to make sure.
+
+## final.model_surprise
+
+I was surprised that the robot may not move exactly how the math predicts. Small changes in timing, speed, or movement can change the path.
+
+## final.synthesis
+
+Motion models show how the robot is supposed to move using math. Coordinate frames show which direction the robot is moving and turning. Software tests check if the code follows the rules, such as speed limits and having both movement and turns. Together, they help show if the robot should work correctly.
+
+## mission_1.error_source
+
+It seems model/ timing error is when the computer sends bad commands resulting int the robot moving wrongly, while localization error the robot does movement but it wasn't tracked/ processed by computer
+
+## mission_1.largest_error
+
+The sequence with the largest discrepancy is straight. The model prediction shows that the pose would be at (0.45m,0, 0.0 RAD) but the observation was still (0,0,0). The robot failed to execute its primary objective of forward translation therefore missing it destination target.
+
+## mission_1.model_vs_observation
+
+The observed motion did not match the model at all. The model predicted a movement to destination but the observed motion was basically still.
+
+## mission_1.predictions
+
+{'arc': {'x': 0.37, 'y': 0.39, 'theta': 1.6}, 'straight': {'x': 0.45, 'y': 0.0, 'theta': 0.0}, 'turn_then_drive': {'x': 0.0, 'y': 0.3, 'theta': 1.57}}
+
+## mission_1.predictions_locked_at
+
+2026-09-17T16:43:12.757821+00:00
+
+## mission_1.twice_distance
+
+If the robot drove twice as long at the same straight velocity it would produce the same error.
+
+## mission_2.diagnostics
+
+{'stale': 'Transform unavailable at the requested time', 'typo': 'Unknown frame name', 'wrong_source': 'Point interpreted in the wrong source frame'}
+
+## mission_2.fixed_meaning
+
+The odom is fixed to odometry estimates that are based on the movements the robot make over time, base_link is fixed to the current positions and movements, and base_scan is fixed to the sensor .
+
+## mission_2.map_absent
+
+The reason why no map frame might exist in this lab because there is no movement actually occurring. Since there is no movement code being executed it can not collet any real time data necessary for generating a map frame. 
+
+## mission_2.moving_coordinates
+
+When the robot moves the coordinates or the base_link changes increasing or decreasing based on the robot's movements in the base_link frame.
+
+## mission_2.point_answers
+
+{'sensor_point_in_base': {'x': 0.97, 'y': 0.0}, 'sensor_point_in_odom': {'x': 0.97, 'y': 0.0}}
+
+## mission_2.relationships
+
+{'base_to_sensor': 'base_link → base_scan', 'map_role': 'Global frame corrected by localization or SLAM', 'odom_to_base': 'odom → base_link'}
+
+## mission_2.sensor_offset
+
+Software must know the sensor's mounting transform in order for it to properly interpret the data and provide the most accurate localization.
+
+## mission_3.ai_disclosure
+
+I used ChatGPT to help create a format given specific specifications regarding a closed rectangle pattern. I also used it to debug my code when the compiler wasn't working properly and wasn't finding the file.
+
+## mission_3.ai_locked_at
+
+2026-09-25T23:25:56.911450+00:00
+
+## mission_3.assumptions
+
+Some undocumented assumptions that AI made are that twist commands take effect immediately, timer.cancel() stops future callbacks, the robot is starting in the correct position, no obstacles interferes with the planned route, and wheather or not emergency stops would be needed. 
+
+## mission_3.modifications
+
+The big change I made to the code was changing the rounded rectangle implementation so that the curved sections follow the required rolling arc equation v=wr. In the end instead of having linear_x = 0.22 it equals 0.20 being that we are using a turning radius of 25.(0.8*0.25=0.20. I also didn't add a final stop because the ROS wrapper handles the final stop.
+
+## mission_3.original_output
+
+#!/usr/bin/env python3
+
+import math
+
+import rclpy
+from rclpy.node import Node
+from geometry_msgs.msg import Twist
+
+
+class RoundedRectangle(Node):
+
+    def __init__(self):
+        super().__init__('rounded_rectangle')
+
+        # ============================================================
+        # Parameters
+        # ============================================================
+
+        self.declare_parameter('length', 4.0)
+        self.declare_parameter('width', 2.0)
+        self.declare_parameter('radius', 0.5)
+        self.declare_parameter('linear_velocity_max', 0.5)
+        self.declare_parameter('angular_velocity_max', 0.5)
+
+        self.length = self.get_parameter('length').value
+        self.width = self.get_parameter('width').value
+        self.radius = self.get_parameter('radius').value
+        self.linear_velocity_max = self.get_parameter(
+            'linear_velocity_max'
+        ).value
+        self.angular_velocity_max = self.get_parameter(
+            'angular_velocity_max'
+        ).value
+
+        # ============================================================
+        # Check parameters
+        # ============================================================
+
+        if self.radius <= 0.0:
+            raise ValueError('radius must be greater than 0')
+
+        if self.length <= 2.0 * self.radius:
+            raise ValueError(
+                'length must be greater than 2 * radius'
+            )
+
+        if self.width <= 2.0 * self.radius:
+            raise ValueError(
+                'width must be greater than 2 * radius'
+            )
+
+        if self.linear_velocity_max <= 0.0:
+            raise ValueError(
+                'linear_velocity_max must be greater than 0'
+            )
+
+        if self.angular_velocity_max <= 0.0:
+            raise ValueError(
+                'angular_velocity_max must be greater than 0'
+            )
+
+        # ============================================================
+        # Velocity for the arcs
+        #
+        # v = omega * radius
+        #
+        # The angular velocity is limited by angular_velocity_max.
+        # Therefore:
+        #
+        # omega = min(angular_velocity_max,
+        #             linear_velocity_max / radius)
+        #
+        # and:
+        #
+        # v = omega * radius
+        #
+        # This guarantees the rolling arc equation exactly.
+        # ============================================================
+
+        self.angular_velocity_arc = min(
+            self.angular_velocity_max,
+            self.linear_velocity_max / self.radius
+        )
+
+        self.linear_velocity_arc = (
+            self.angular_velocity_arc * self.radius
+        )
+
+        # ============================================================
+        # Straight-line distances
+        #
+        # Because the corners are rounded, each straight portion
+        # is shortened by one radius at each end.
+        # ============================================================
+
+        self.straight_length = self.length - 2.0 * self.radius
+        self.straight_width = self.width - 2.0 * self.radius
+
+        # ============================================================
+        # State machine
+        #
+        # 0 = straight length
+        # 1 = arc
+        # 2 = straight width
+        # 3 = arc
+        # 4 = straight length
+        # 5 = arc
+        # 6 = straight width
+        # 7 = final arc
+        # 8 = finished
+        # ============================================================
+
+        self.state = 0
+
+        # Time at which the current state started
+        self.state_start_time = self.get_clock().now()
+
+        # ============================================================
+        # Publisher
+        # ============================================================
+
+        self.cmd_vel_pub = self.create_publisher(
+            Twist,
+            '/cmd_vel',
+            10
+        )
+
+        # ============================================================
+        # 10 Hz control loop
+        # ============================================================
+
+        self.timer = self.create_timer(
+            0.1,
+            self.control_loop
+        )
+
+        self.get_logger().info(
+            'Rounded rectangle controller started.'
+        )
+
+    # ================================================================
+    # State timing
+    # ================================================================
+
+    def state_elapsed(self):
+        """Return elapsed time in the current state."""
+
+        now = self.get_clock().now()
+
+        elapsed = (
+            now - self.state_start_time
+        ).nanoseconds / 1e9
+
+        return elapsed
+
+    # ================================================================
+    # Change state
+    # ================================================================
+
+    def next_state(self):
+        """Move to the next path segment."""
+
+        self.state += 1
+
+        self.state_start_time = self.get_clock().now()
+
+        # There are 8 path segments:
+        #
+        # straight
+        # arc
+        # straight
+        # arc
+        # straight
+        # arc
+        # straight
+        # arc
+        #
+        # State 8 means the complete path is finished.
+
+        if self.state >= 8:
+            self.state = 8
+
+            self.get_logger().info(
+                'Closed rounded rectangle completed.'
+            )
+
+    # ================================================================
+    # Publish velocity
+    # ================================================================
+
+    def publish_velocity(self, linear, angular):
+        """Publish a Twist command."""
+
+        msg = Twist()
+
+        msg.linear.x = linear
+        msg.linear.y = 0.0
+        msg.linear.z = 0.0
+
+        msg.angular.x = 0.0
+        msg.angular.y = 0.0
+        msg.angular.z = angular
+
+        self.cmd_vel_pub.publish(msg)
+
+    # ================================================================
+    # Control loop
+    # ================================================================
+
+    def control_loop(self):
+
+        # ------------------------------------------------------------
+        # Finished
+        #
+        # Immediately command a complete stop.
+        # ------------------------------------------------------------
+
+        if self.state == 8:
+
+            self.publish_velocity(
+                0.0,
+                0.0
+            )
+
+            # Stop the timer so the final command is not followed
+            # by another movement command.
+            self.timer.cancel()
+
+            return
+
+        # ------------------------------------------------------------
+        # State 0: Straight along length
+        # ------------------------------------------------------------
+
+        if self.state == 0:
+
+            duration = (
+                self.straight_length /
+                self.linear_velocity_max
+            )
+
+            self.publish_velocity(
+                self.linear_velocity_max,
+                0.0
+            )
+
+            if self.state_elapsed() >= duration:
+                self.next_state()
+
+        # ------------------------------------------------------------
+        # State 1: First quarter-circle
+        # ------------------------------------------------------------
+
+        elif self.state == 1:
+
+            # Arc length = pi*r/2
+            arc_length = (
+                math.pi * self.radius / 2.0
+            )
+
+            duration = (
+                arc_length /
+                self.linear_velocity_arc
+            )
+
+            self.publish_velocity(
+                self.linear_velocity_arc,
+                self.angular_velocity_arc
+            )
+
+            if self.state_elapsed() >= duration:
+                self.next_state()
+
+        # ------------------------------------------------------------
+        # State 2: Straight along width
+        # ------------------------------------------------------------
+
+        elif self.state == 2:
+
+            duration = (
+                self.straight_width /
+                self.linear_velocity_max
+            )
+
+            self.publish_velocity(
+                self.linear_velocity_max,
+                0.0
+            )
+
+            if self.state_elapsed() >= duration:
+                self.next_state()
+
+        # ------------------------------------------------------------
+        # State 3: Second quarter-circle
+        # ------------------------------------------------------------
+
+        elif self.state == 3:
+
+            arc_length = (
+                math.pi * self.radius / 2.0
+            )
+
+            duration = (
+                arc_length /
+                self.linear_velocity_arc
+            )
+
+            self.publish_velocity(
+                self.linear_velocity_arc,
+                self.angular_velocity_arc
+            )
+
+            if self.state_elapsed() >= duration:
+                self.next_state()
+
+        # ------------------------------------------------------------
+        # State 4: Straight along length
+        # ------------------------------------------------------------
+
+        elif self.state == 4:
+
+            duration = (
+                self.straight_length /
+                self.linear_velocity_max
+            )
+
+            self.publish_velocity(
+                self.linear_velocity_max,
+                0.0
+            )
+
+            if self.state_elapsed() >= duration:
+                self.next_state()
+
+        # ------------------------------------------------------------
+        # State 5: Third quarter-circle
+        # ------------------------------------------------------------
+
+        elif self.state == 5:
+
+            arc_length = (
+                math.pi * self.radius / 2.0
+            )
+
+            duration = (
+                arc_length /
+                self.linear_velocity_arc
+            )
+
+            self.publish_velocity(
+                self.linear_velocity_arc,
+                self.angular_velocity_arc
+            )
+
+            if self.state_elapsed() >= duration:
+                self.next_state()
+
+        # ------------------------------------------------------------
+        # State 6: Straight along width
+        # ------------------------------------------------------------
+
+        elif self.state == 6:
+
+            duration = (
+                self.straight_width /
+                self.linear_velocity_max
+            )
+
+            self.publish_velocity(
+                self.linear_velocity_max,
+                0.0
+            )
+
+            if self.state_elapsed() >= duration:
+                self.next_state()
+
+        # ------------------------------------------------------------
+        # State 7: Final quarter-circle
+        # ------------------------------------------------------------
+
+        elif self.state == 7:
+
+            arc_length = (
+                math.pi * self.radius / 2.0
+            )
+
+            duration = (
+                arc_length /
+                self.linear_velocity_arc
+            )
+
+            self.publish_velocity(
+                self.linear_velocity_arc,
+                self.angular_velocity_arc
+            )
+
+            if self.state_elapsed() >= duration:
+                # The fourth arc is complete.
+                #
+                # Immediately transition to the finished state.
+                self.next_state()
+
+                # Immediately publish zero velocity.
+                self.publish_velocity(
+                    0.0,
+                    0.0
+                )
+
+                # Stop future movement commands.
+                self.timer.cancel()
+
+
+# ====================================================================
+# Main
+# ====================================================================
+
+def main(args=None):
+
+    rclpy.init(args=args)
+
+    node = RoundedRectangle()
+
+    try:
+        rclpy.spin(node)
+
+    except KeyboardInterrupt:
+        pass
+
+    finally:
+        # Always send a final zero-velocity command when shutting down.
+        node.publish_velocity(0.0, 0.0)
+
+        node.destroy_node()
+
+        rclpy.shutdown()
+
+
+if __name__ == '__main__':
+    main()
+
+## mission_3.original_prompt
+
+Write a complete,  ROS 2 Python code that commands a mobile robot to drive a closed rounded rectangle path and stops cleanly once completed.
+
+Inputs & Parameters:
+- length (total length of the rectangle layout)
+- width (total width of the rectangle layout)
+- radius (turning radius for corner arcs)
+- linear_velocity_max (velocity limit for moving straight)
+- angular_velocity_max  (velocity limit for rotating)
+Coordinate Conventions
+-X-axis is forward, Y-axis is left, and turning is counter-clockwise
+Velocity:
+- Straight line segments must move at max_linear_velocity and curved corner arcs must move at the linear speed to strictly satisfy the rolling arc equation: v = angular_velocity * radius.
+Output Requirements:
+- Continually publish  velocity messages to the '/cmd_vel' at a stable rate of 10Hz.
+Stopping Behavior & Loop Closure Test:
+- Once the final 4th arc is completed, the node must immediately publish zero velocities (linear.x = 0.0, angular.z = 0.0) to bring the robot to a complete halt.
+
+
+
+## mission_3.problems
+
+Some things that need verification are the final stop behavior states that after the final arc is completed then the robot should stop but what happens when the the robot doesn't complete that final arc, then what and the robot being commanded using timed velocities assuming the robot travels the expected distance.
+
+## mission_3.remaining_limits
+
+The seven tests do not prove that the robot physically drive the exact intended closed rounded rectangle shape. It also doesn't account for real world factors such as wheel slip, timing, and robot behavior could affect the drive path. The ROS run and evaluator provide additional evidence, but there is still some risks that the physical path will not be perfectly accurate.
+
+## mission_3.specification
+
+For creation of a closed rounded rectangle I would need the following:
+Inputs: length, width, radius, and velocity(linear and angular)
+Output: Message in tf2 echo tool terminal that updates at 10Hz 
+Coordinate conventions: x-axis is to move forward, y value is to move left and radius to turn
+Velocity limits: Straight line limit should be the max linear velocity and curved arcs limit should be (v=angular velocity *turning radius)
+Stopping behavior: Zero velocities should appear upon completing the final arc loop and shut down when it is safe to do so
+Test expectations:The robot must be able to trace a complete rectangle loop and return to it starting coordinate (0,0) so that it's a closed rounded rectangle
+
+
+## mission_3.test_argument
+
+The test are used to check for safety and the basic structure requirements. Test_nonempty makes sure the pattern has at least three segments, rejecting a pattern that is empty or incomplete.  Test_segment_types makes sure every segment is a valid segment object. Test_positive_durations rules out segments that have zero or negative durations. Test_linear_limits makes sure the linear velocity never exceeds 0.22. Test_angular_limits makes sure the angular velocity never exceeds 0.8. Test_pattern_contains_motion makes sure the pattern actually contains motion. Test_pattern_contains_turning makes sure the pattern contains a turn.

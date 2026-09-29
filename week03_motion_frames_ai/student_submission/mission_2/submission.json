@@ -1,0 +1,107 @@
+{
+  "schema_version": 1,
+  "lab_id": "week03_motion_frames_ai",
+  "mission_id": "mission_2",
+  "saved_at": "2026-09-29T14:43:44.321953+00:00",
+  "evidence": {
+    "evidence_id": "2dcf42e20a0bc94e",
+    "snapshot": {
+      "schema_version": 1,
+      "captured_at": "2026-09-29T14:43:08.614471+00:00",
+      "frames": [
+        "odom",
+        "base_link",
+        "base_scan"
+      ],
+      "frame_chain": [
+        "odom",
+        "base_link",
+        "base_scan"
+      ],
+      "transforms": {
+        "base_scan_to_base_link": {
+          "translation": {
+            "x": -0.032,
+            "y": 0.0,
+            "z": 0.172
+          },
+          "yaw": 0.0
+        },
+        "base_scan_to_odom": {
+          "translation": {
+            "x": -0.031999990399215215,
+            "y": 1.473587248973651e-14,
+            "z": 0.182
+          },
+          "yaw": -4.604960844929772e-13
+        }
+      },
+      "point_prompts": {
+        "sensor_point_in_base": "Transform point (1.0, 0.0) from base_scan to base_link.",
+        "sensor_point_in_odom": "Transform point (1.0, 0.0) from base_scan to odom."
+      },
+      "transformed_points": {
+        "sensor_point_in_base": {
+          "x": 0.968,
+          "y": 0.0
+        },
+        "sensor_point_in_odom": {
+          "x": 0.9680000096007848,
+          "y": -4.457602120032407e-13
+        }
+      }
+    },
+    "check": [
+      {
+        "id": "snapshot",
+        "label": "Live TF snapshot captured",
+        "passed": true,
+        "actual": "2026-09-29T14:43:08.614471+00:00",
+        "expected": "timestamp present"
+      },
+      {
+        "id": "frames",
+        "label": "Required frames observed",
+        "passed": true,
+        "actual": [
+          "base_link",
+          "base_scan",
+          "odom"
+        ],
+        "expected": [
+          "base_link",
+          "base_scan",
+          "odom"
+        ]
+      },
+      {
+        "id": "relationships",
+        "label": "Frame relationships interpreted",
+        "passed": true,
+        "actual": 3,
+        "expected": "3/3"
+      },
+      {
+        "id": "points",
+        "label": "Two point transforms calculated",
+        "passed": true,
+        "actual": 2,
+        "expected": ">= 2 within tolerance"
+      },
+      {
+        "id": "diagnostics",
+        "label": "Injected frame problems diagnosed",
+        "passed": true,
+        "actual": 3,
+        "expected": "3/3"
+      },
+      {
+        "id": "reflection",
+        "label": "Frame reasoning completed",
+        "passed": true,
+        "actual": "complete",
+        "expected": "complete"
+      }
+    ]
+  }
+}

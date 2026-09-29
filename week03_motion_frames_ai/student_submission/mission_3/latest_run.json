@@ -1,0 +1,82 @@
+{
+  "evidence_id": "2f26ebd4d034a107",
+  "ai_evaluation": {
+    "schema_version": 1,
+    "captured_at": "2026-09-29T18:50:40.346827+00:00",
+    "pattern": "rounded_rectangle",
+    "unit_tests_passed": true,
+    "test_count": 7,
+    "unit_test_output": "test_angular_limits (test_pattern.PatternTests.test_angular_limits) ... ok\ntest_linear_limits (test_pattern.PatternTests.test_linear_limits) ... ok\ntest_nonempty (test_pattern.PatternTests.test_nonempty) ... ok\ntest_pattern_contains_motion (test_pattern.PatternTests.test_pattern_contains_motion) ... ok\ntest_pattern_contains_turning (test_pattern.PatternTests.test_pattern_contains_turning) ... ok\ntest_positive_durations (test_pattern.PatternTests.test_positive_durations) ... ok\ntest_segment_types (test_pattern.PatternTests.test_segment_types) ... ok\n\n----------------------------------------------------------------------\nRan 7 tests in 0.001s\n\nOK\n",
+    "commands_bounded": true,
+    "shape_check_passed": true,
+    "predicted_endpoint": {
+      "x": 6.9056374676634835e-06,
+      "y": -3.2323697594371925e-06,
+      "theta": 1.4692820414108354e-05
+    },
+    "integration_passed": true,
+    "final_stop_verified": true,
+    "source_sha256": "8a8383114b5d29e71afb109d7f918a412a585848893e6de1a0e18160f955b386",
+    "source_differs_from_original": true,
+    "segment_count": 8
+  },
+  "ai_lock": {
+    "locked_at": "2026-09-25T23:25:56.911450+00:00",
+    "pattern": "rounded_rectangle",
+    "specification_sha256": "cfd0fcd05d41820e990834202f50aa84c25fb11654ff2a7cec1e285d318f4ffe",
+    "prompt_sha256": "6d3b4b389d0a7693007806c1d5c0d4546793ddc74ff80eda8052992f3fec6ae8",
+    "output_sha256": "aaebd4376364f0c654e756f8ae490095f1f1d81c232e0c6e188b1451fa771284",
+    "integrity_valid": true
+  },
+  "check": [
+    {
+      "id": "original",
+      "label": "Original prompt and AI output preserved",
+      "passed": true,
+      "actual": "2026-09-25T23:25:56.911450+00:00",
+      "expected": "immutable record"
+    },
+    {
+      "id": "source",
+      "label": "Final source and tests present",
+      "passed": true,
+      "actual": true,
+      "expected": "true"
+    },
+    {
+      "id": "pattern",
+      "label": "Assigned pattern implemented",
+      "passed": true,
+      "actual": "rounded_rectangle",
+      "expected": "rounded_rectangle"
+    },
+    {
+      "id": "tests",
+      "label": "Meaningful automated tests pass",
+      "passed": true,
+      "actual": 7,
+      "expected": ">= 6 passing"
+    },
+    {
+      "id": "safety",
+      "label": "Commands bounded and final stop verified",
+      "passed": true,
+      "actual": true,
+      "expected": "true"
+    },
+    {
+      "id": "modified",
+      "label": "Final source differs from original output",
+      "passed": true,
+      "actual": true,
+      "expected": "true"
+    },
+    {
+      "id": "reflection",
+      "label": "AI review and correctness argument completed",
+      "passed": true,
+      "actual": "complete",
+      "expected": "six substantive responses"
+    }
+  ]
+}

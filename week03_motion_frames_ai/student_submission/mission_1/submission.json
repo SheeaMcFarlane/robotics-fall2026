@@ -1,0 +1,128 @@
+{
+  "schema_version": 1,
+  "lab_id": "week03_motion_frames_ai",
+  "mission_id": "mission_1",
+  "saved_at": "2026-09-17T17:08:44.562735+00:00",
+  "evidence": {
+    "evidence_id": "2d46e1818c265c59",
+    "runs": [
+      {
+        "sequence_id": "turn_then_drive",
+        "captured_at": "2026-09-17T16:47:39.838495+00:00",
+        "segments": [
+          {
+            "linear_x": 0.0,
+            "angular_z": 0.5,
+            "duration": 3.141592653589793
+          },
+          {
+            "linear_x": 0.15,
+            "angular_z": 0.0,
+            "duration": 2.0
+          }
+        ],
+        "predicted_pose": {
+          "x": 1.8369701987210297e-17,
+          "y": 0.3,
+          "theta": 1.5707963267948966
+        },
+        "observed_pose": {
+          "x": 1.6447659300004402e-20,
+          "y": 4.2816759438369216e-36,
+          "theta": -1.3762217441350998e-19
+        },
+        "position_error": 0.3,
+        "heading_error": 1.5707963267948966,
+        "completed": true,
+        "stop_sent": true
+      },
+      {
+        "sequence_id": "straight",
+        "captured_at": "2026-09-17T16:48:24.211509+00:00",
+        "segments": [
+          {
+            "linear_x": 0.15,
+            "angular_z": 0.0,
+            "duration": 3.0
+          }
+        ],
+        "predicted_pose": {
+          "x": 0.44999999999999996,
+          "y": 0.0,
+          "theta": 0.0
+        },
+        "observed_pose": {
+          "x": -5.773720675620133e-22,
+          "y": 7.589626319925614e-36,
+          "theta": 8.302825398501015e-20
+        },
+        "position_error": 0.44999999999999996,
+        "heading_error": 8.302825398501015e-20,
+        "completed": true,
+        "stop_sent": true
+      },
+      {
+        "sequence_id": "arc",
+        "captured_at": "2026-09-17T16:50:37.194336+00:00",
+        "segments": [
+          {
+            "linear_x": 0.15,
+            "angular_z": 0.4,
+            "duration": 4.0
+          }
+        ],
+        "predicted_pose": {
+          "x": 0.3748401011405644,
+          "y": 0.38594982086298324,
+          "theta": 1.6
+        },
+        "observed_pose": {
+          "x": -1.5617169965001163e-21,
+          "y": -7.09103271518919e-36,
+          "theta": 1.6407127449989304e-19
+        },
+        "position_error": 0.538017068174642,
+        "heading_error": 1.6,
+        "completed": true,
+        "stop_sent": true
+      }
+    ],
+    "check": [
+      {
+        "id": "predictions",
+        "label": "Final-pose predictions are numerically correct",
+        "passed": true,
+        "actual": 3,
+        "expected": "3/3 within tolerance"
+      },
+      {
+        "id": "locked",
+        "label": "Predictions locked before execution",
+        "passed": true,
+        "actual": "2026-09-17T16:43:12.757821+00:00",
+        "expected": "before all runs"
+      },
+      {
+        "id": "runs",
+        "label": "Three sequences completed with safe stops",
+        "passed": true,
+        "actual": 3,
+        "expected": "3/3"
+      },
+      {
+        "id": "errors",
+        "label": "Pose discrepancies calculated",
+        "passed": true,
+        "actual": 3,
+        "expected": "3/3"
+      },
+      {
+        "id": "reflection",
+        "label": "Motion-model analysis completed",
+        "passed": true,
+        "actual": "complete",
+        "expected": "complete"
+      }
+    ]
+  }
+}

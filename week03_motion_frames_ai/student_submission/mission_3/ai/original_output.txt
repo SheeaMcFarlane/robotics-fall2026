@@ -1,0 +1,439 @@
+#!/usr/bin/env python3
+
+import math
+
+import rclpy
+from rclpy.node import Node
+from geometry_msgs.msg import Twist
+
+
+class RoundedRectangle(Node):
+
+    def __init__(self):
+        super().__init__('rounded_rectangle')
+
+        # ============================================================
+        # Parameters
+        # ============================================================
+
+        self.declare_parameter('length', 4.0)
+        self.declare_parameter('width', 2.0)
+        self.declare_parameter('radius', 0.5)
+        self.declare_parameter('linear_velocity_max', 0.5)
+        self.declare_parameter('angular_velocity_max', 0.5)
+
+        self.length = self.get_parameter('length').value
+        self.width = self.get_parameter('width').value
+        self.radius = self.get_parameter('radius').value
+        self.linear_velocity_max = self.get_parameter(
+            'linear_velocity_max'
+        ).value
+        self.angular_velocity_max = self.get_parameter(
+            'angular_velocity_max'
+        ).value
+
+        # ============================================================
+        # Check parameters
+        # ============================================================
+
+        if self.radius <= 0.0:
+            raise ValueError('radius must be greater than 0')
+
+        if self.length <= 2.0 * self.radius:
+            raise ValueError(
+                'length must be greater than 2 * radius'
+            )
+
+        if self.width <= 2.0 * self.radius:
+            raise ValueError(
+                'width must be greater than 2 * radius'
+            )
+
+        if self.linear_velocity_max <= 0.0:
+            raise ValueError(
+                'linear_velocity_max must be greater than 0'
+            )
+
+        if self.angular_velocity_max <= 0.0:
+            raise ValueError(
+                'angular_velocity_max must be greater than 0'
+            )
+
+        # ============================================================
+        # Velocity for the arcs
+        #
+        # v = omega * radius
+        #
+        # The angular velocity is limited by angular_velocity_max.
+        # Therefore:
+        #
+        # omega = min(angular_velocity_max,
+        #             linear_velocity_max / radius)
+        #
+        # and:
+        #
+        # v = omega * radius
+        #
+        # This guarantees the rolling arc equation exactly.
+        # ============================================================
+
+        self.angular_velocity_arc = min(
+            self.angular_velocity_max,
+            self.linear_velocity_max / self.radius
+        )
+
+        self.linear_velocity_arc = (
+            self.angular_velocity_arc * self.radius
+        )
+
+        # ============================================================
+        # Straight-line distances
+        #
+        # Because the corners are rounded, each straight portion
+        # is shortened by one radius at each end.
+        # ============================================================
+
+        self.straight_length = self.length - 2.0 * self.radius
+        self.straight_width = self.width - 2.0 * self.radius
+
+        # ============================================================
+        # State machine
+        #
+        # 0 = straight length
+        # 1 = arc
+        # 2 = straight width
+        # 3 = arc
+        # 4 = straight length
+        # 5 = arc
+        # 6 = straight width
+        # 7 = final arc
+        # 8 = finished
+        # ============================================================
+
+        self.state = 0
+
+        # Time at which the current state started
+        self.state_start_time = self.get_clock().now()
+
+        # ============================================================
+        # Publisher
+        # ============================================================
+
+        self.cmd_vel_pub = self.create_publisher(
+            Twist,
+            '/cmd_vel',
+            10
+        )
+
+        # ============================================================
+        # 10 Hz control loop
+        # ============================================================
+
+        self.timer = self.create_timer(
+            0.1,
+            self.control_loop
+        )
+
+        self.get_logger().info(
+            'Rounded rectangle controller started.'
+        )
+
+    # ================================================================
+    # State timing
+    # ================================================================
+
+    def state_elapsed(self):
+        """Return elapsed time in the current state."""
+
+        now = self.get_clock().now()
+
+        elapsed = (
+            now - self.state_start_time
+        ).nanoseconds / 1e9
+
+        return elapsed
+
+    # ================================================================
+    # Change state
+    # ================================================================
+
+    def next_state(self):
+        """Move to the next path segment."""
+
+        self.state += 1
+
+        self.state_start_time = self.get_clock().now()
+
+        # There are 8 path segments:
+        #
+        # straight
+        # arc
+        # straight
+        # arc
+        # straight
+        # arc
+        # straight
+        # arc
+        #
+        # State 8 means the complete path is finished.
+
+        if self.state >= 8:
+            self.state = 8
+
+            self.get_logger().info(
+                'Closed rounded rectangle completed.'
+            )
+
+    # ================================================================
+    # Publish velocity
+    # ================================================================
+
+    def publish_velocity(self, linear, angular):
+        """Publish a Twist command."""
+
+        msg = Twist()
+
+        msg.linear.x = linear
+        msg.linear.y = 0.0
+        msg.linear.z = 0.0
+
+        msg.angular.x = 0.0
+        msg.angular.y = 0.0
+        msg.angular.z = angular
+
+        self.cmd_vel_pub.publish(msg)
+
+    # ================================================================
+    # Control loop
+    # ================================================================
+
+    def control_loop(self):
+
+        # ------------------------------------------------------------
+        # Finished
+        #
+        # Immediately command a complete stop.
+        # ------------------------------------------------------------
+
+        if self.state == 8:
+
+            self.publish_velocity(
+                0.0,
+                0.0
+            )
+
+            # Stop the timer so the final command is not followed
+            # by another movement command.
+            self.timer.cancel()
+
+            return
+
+        # ------------------------------------------------------------
+        # State 0: Straight along length
+        # ------------------------------------------------------------
+
+        if self.state == 0:
+
+            duration = (
+                self.straight_length /
+                self.linear_velocity_max
+            )
+
+            self.publish_velocity(
+                self.linear_velocity_max,
+                0.0
+            )
+
+            if self.state_elapsed() >= duration:
+                self.next_state()
+
+        # ------------------------------------------------------------
+        # State 1: First quarter-circle
+        # ------------------------------------------------------------
+
+        elif self.state == 1:
+
+            # Arc length = pi*r/2
+            arc_length = (
+                math.pi * self.radius / 2.0
+            )
+
+            duration = (
+                arc_length /
+                self.linear_velocity_arc
+            )
+
+            self.publish_velocity(
+                self.linear_velocity_arc,
+                self.angular_velocity_arc
+            )
+
+            if self.state_elapsed() >= duration:
+                self.next_state()
+
+        # ------------------------------------------------------------
+        # State 2: Straight along width
+        # ------------------------------------------------------------
+
+        elif self.state == 2:
+
+            duration = (
+                self.straight_width /
+                self.linear_velocity_max
+            )
+
+            self.publish_velocity(
+                self.linear_velocity_max,
+                0.0
+            )
+
+            if self.state_elapsed() >= duration:
+                self.next_state()
+
+        # ------------------------------------------------------------
+        # State 3: Second quarter-circle
+        # ------------------------------------------------------------
+
+        elif self.state == 3:
+
+            arc_length = (
+                math.pi * self.radius / 2.0
+            )
+
+            duration = (
+                arc_length /
+                self.linear_velocity_arc
+            )
+
+            self.publish_velocity(
+                self.linear_velocity_arc,
+                self.angular_velocity_arc
+            )
+
+            if self.state_elapsed() >= duration:
+                self.next_state()
+
+        # ------------------------------------------------------------
+        # State 4: Straight along length
+        # ------------------------------------------------------------
+
+        elif self.state == 4:
+
+            duration = (
+                self.straight_length /
+                self.linear_velocity_max
+            )
+
+            self.publish_velocity(
+                self.linear_velocity_max,
+                0.0
+            )
+
+            if self.state_elapsed() >= duration:
+                self.next_state()
+
+        # ------------------------------------------------------------
+        # State 5: Third quarter-circle
+        # ------------------------------------------------------------
+
+        elif self.state == 5:
+
+            arc_length = (
+                math.pi * self.radius / 2.0
+            )
+
+            duration = (
+                arc_length /
+                self.linear_velocity_arc
+            )
+
+            self.publish_velocity(
+                self.linear_velocity_arc,
+                self.angular_velocity_arc
+            )
+
+            if self.state_elapsed() >= duration:
+                self.next_state()
+
+        # ------------------------------------------------------------
+        # State 6: Straight along width
+        # ------------------------------------------------------------
+
+        elif self.state == 6:
+
+            duration = (
+                self.straight_width /
+                self.linear_velocity_max
+            )
+
+            self.publish_velocity(
+                self.linear_velocity_max,
+                0.0
+            )
+
+            if self.state_elapsed() >= duration:
+                self.next_state()
+
+        # ------------------------------------------------------------
+        # State 7: Final quarter-circle
+        # ------------------------------------------------------------
+
+        elif self.state == 7:
+
+            arc_length = (
+                math.pi * self.radius / 2.0
+            )
+
+            duration = (
+                arc_length /
+                self.linear_velocity_arc
+            )
+
+            self.publish_velocity(
+                self.linear_velocity_arc,
+                self.angular_velocity_arc
+            )
+
+            if self.state_elapsed() >= duration:
+                # The fourth arc is complete.
+                #
+                # Immediately transition to the finished state.
+                self.next_state()
+
+                # Immediately publish zero velocity.
+                self.publish_velocity(
+                    0.0,
+                    0.0
+                )
+
+                # Stop future movement commands.
+                self.timer.cancel()
+
+
+# ====================================================================
+# Main
+# ====================================================================
+
+def main(args=None):
+
+    rclpy.init(args=args)
+
+    node = RoundedRectangle()
+
+    try:
+        rclpy.spin(node)
+
+    except KeyboardInterrupt:
+        pass
+
+    finally:
+        # Always send a final zero-velocity command when shutting down.
+        node.publish_velocity(0.0, 0.0)
+
+        node.destroy_node()
+
+        rclpy.shutdown()
+
+
+if __name__ == '__main__':
+    main()

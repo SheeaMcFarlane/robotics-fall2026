@@ -1,0 +1,7 @@
+For creation of a closed rounded rectangle I would need the following:
+Inputs: length, width, radius, and velocity(linear and angular)
+Output: Message in tf2 echo tool terminal that updates at 10Hz 
+Coordinate conventions: x-axis is to move forward, y value is to move left and radius to turn
+Velocity limits: Straight line limit should be the max linear velocity and curved arcs limit should be (v=angular velocity *turning radius)
+Stopping behavior: Zero velocities should appear upon completing the final arc loop and shut down when it is safe to do so
+Test expectations:The robot must be able to trace a complete rectangle loop and return to it starting coordinate (0,0) so that it's a closed rounded rectangle
