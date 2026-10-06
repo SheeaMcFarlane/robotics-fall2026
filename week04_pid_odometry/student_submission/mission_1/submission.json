@@ -1,0 +1,38 @@
+{
+  "schema_version": 1,
+  "created_at": "2026-10-06T11:13:22",
+  "mission_id": "mission_1",
+  "student": {
+    "name": "",
+    "student_id": "",
+    "section": ""
+  },
+  "explanations": {
+    "joint_gains": "I tuned the shoulder and elbow gains by increasing each PID value. I brought the Ki, and the Kp higher than the Kd for both parts of the arm. One thing I also did was make the Kp for the shoulder less than that for the elbow. \n",
+    "gravity_comp": "Gravity compensation helped the arm hold it's position better, basically countering the pull of gravity.\n"
+  },
+  "params": {
+    "activity": "two_link_arm_pid_tuning",
+    "kp1": 8.4,
+    "ki1": 1.95,
+    "kd1": 1.85,
+    "kp2": 9.8,
+    "ki2": 2.2,
+    "kd2": 1.95,
+    "gravityCompensation": true
+  },
+  "metrics": {
+    "completed": true,
+    "posesHeld": 3,
+    "posesRequired": 3
+  },
+  "checkin": {
+    "note": "For the shoulder and the elbow controllers to make the arm settle cleanly i changed al three K values, each played their own role but most importantly the Ki and the Kp had the most impact on the robot arm. While it might have not been needed the Kd by adjusting the Kd slightly I was able to fix the shaking and overshooting which allowed the arm to settle more smoothly and land closer to the target.",
+    "choice": "",
+    "complete": true
+  },
+  "csv_files": {},
+  "activity_gifs": [
+    "latest_arm_tuning.gif"
+  ]
+}

@@ -1,0 +1,36 @@
+{
+  "schema_version": 1,
+  "created_at": "2026-10-06T11:14:53",
+  "mission_id": "mission_2",
+  "student": {
+    "name": "",
+    "student_id": "",
+    "section": ""
+  },
+  "explanations": {
+    "calibration": "After watching the original estimated I noticed the forward pod's estimate was further than where the robot stopped and the strafe pod estimate was earlier than where the robot stopped. To find the right estimate i slowly decreased the forward in/tick and slowly increased the  strafe in/tick and tested it with each increase and decrease.\n",
+    "drift": "Odometry can still drift even after calibration because of wheel slipping, measurement errors even if it's a really small error, uneven floors, or changes in the robot\u2019s movement. These small errors can add up over time and make the estimated position different from the robot\u2019s actual position.\n"
+  },
+  "params": {
+    "forwardInPerTick": 0.0508,
+    "strafeInPerTick": 0.0488
+  },
+  "metrics": {
+    "max_error_in": 1.7640982176738529,
+    "final_error_in": 1.4869144943808859,
+    "passed": true
+  },
+  "result": {
+    "passed": true,
+    "maxError": 1.7640982176738529,
+    "finalError": 1.4869144943808859,
+    "params": {
+      "forwardInPerTick": 0.0508,
+      "strafeInPerTick": 0.0488
+    }
+  },
+  "csv_files": {},
+  "activity_gifs": [
+    "latest_odometry_test.gif"
+  ]
+}

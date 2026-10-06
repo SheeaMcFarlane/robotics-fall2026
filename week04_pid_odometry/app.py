@@ -1263,13 +1263,36 @@ def csv_for_pid(result: PIDResult) -> str:
     return buffer.getvalue()
 
 
-def csv_for_odom(result: OdomResult) -> str:
-    buffer = io.StringIO()
-    writer = csv.writer(buffer)
-    writer.writerow(["time", "true_x", "true_y", "true_theta", "odom_x", "odom_y", "odom_theta", "left_distance", "right_distance"])
-    for row in zip(result.time, result.true_x, result.true_y, result.true_theta, result.odom_x, result.odom_y, result.odom_theta, result.left_distance, result.right_distance):
+def csv_for_odom(result):
+    output = io.StringIO()
+    writer = csv.writer(output)
+
+    writer.writerow([
+        "time",
+        "true_x",
+        "true_y",
+        "true_theta",
+        "odom_x",
+        "odom_y",
+        "odom_theta",
+        "left_distance",
+        "right_distance",
+    ])
+
+    for row in zip(
+        result["time"],
+        result["true_x"],
+        result["true_y"],
+        result["true_theta"],
+        result["odom_x"],
+        result["odom_y"],
+        result["odom_theta"],
+        result["left_distance"],
+        result["right_distance"],
+    ):
         writer.writerow(row)
-    return buffer.getvalue()
+
+    return output.getvalue()
 
 
 def csv_for_baseline(trials: list[OpenLoopTrial]) -> str:
@@ -2745,7 +2768,7 @@ def render_mission_2(context: dict[str, Any]) -> None:
     if st.button("Check Mission 2", key="check_m2", type="primary", disabled=not checks_ready):
         if passed:
             st.session_state["m2_passed"] = True
-            st.session_state["m2_result"] = component_state_without_recording(result)
+            st.session_state["m2_result"] = result
             st.session_state["m2_params"] = params
             st.session_state["m2_metrics"] = {
                 "max_error_in": max_error,
