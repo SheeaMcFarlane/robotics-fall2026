@@ -6,14 +6,14 @@
   },
   "mission_id": "mission_1",
   "params": {
-    "gravityCompensation": true,
-    "kd1": 1.85,
-    "kd2": 1.95,
+    "gravityCompensation": false,
+    "kd1": 1.65,
+    "kd2": 1.85,
     "ki1": 1.95,
-    "ki2": 2.2,
-    "kp1": 8.4,
-    "kp2": 9.8
+    "ki2": 1.9,
+    "kp1": 9.1,
+    "kp2": 10.1
   },
-  "saved_at": "2026-10-06T11:12:39",
+  "saved_at": "2026-10-06T13:07:55",
   "schema_version": 1
 }

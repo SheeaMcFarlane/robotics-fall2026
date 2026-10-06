@@ -1,15 +1,15 @@
 {
-  "schema_version": 1,
-  "created_at": "2026-10-06T11:14:53",
+  "schema_version": 2,
+  "created_at": "2026-10-06T13:12:39",
   "mission_id": "mission_2",
   "student": {
-    "name": "",
-    "student_id": "",
-    "section": ""
+    "name": "Sheea McFarlane",
+    "student_id": "24292168",
+    "section": "01"
   },
   "explanations": {
-    "calibration": "After watching the original estimated I noticed the forward pod's estimate was further than where the robot stopped and the strafe pod estimate was earlier than where the robot stopped. To find the right estimate i slowly decreased the forward in/tick and slowly increased the  strafe in/tick and tested it with each increase and decrease.\n",
-    "drift": "Odometry can still drift even after calibration because of wheel slipping, measurement errors even if it's a really small error, uneven floors, or changes in the robot\u2019s movement. These small errors can add up over time and make the estimated position different from the robot\u2019s actual position.\n"
+    "prediction": "If the forward pod scale is too large then the robot's estimated forward distance will be too high. If the strafe pod scale is too small then the robot's estimated sideways distance will be too low.",
+    "calibration_analysis": "My prediction was mostly correct. The forward pod measured forward movement, and the strafe pod measured sideways movement. The sideways pod is needed because the robot can move sideways. Some drift can remain because of small measurement errors. The test passed with a maximum error of 1.76 inches, which was under 3 inches."
   },
   "params": {
     "forwardInPerTick": 0.0508,
@@ -29,7 +29,9 @@
       "strafeInPerTick": 0.0488
     }
   },
-  "csv_files": {},
+  "csv_files": {
+    "odometry_test_summary.csv": "max_error_in,final_error_in,forward_in_per_tick,strafe_in_per_tick,passed_server_check\r\n1.7640982176738529,1.4869144943808859,0.0508,0.0488,True\r\n"
+  },
   "activity_gifs": [
     "latest_odometry_test.gif"
   ]

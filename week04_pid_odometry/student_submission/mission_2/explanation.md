@@ -1,15 +1,14 @@
 # mission_2 Submission
 
-- Name: (not provided)
-- Section: (not provided)
+- Name: Sheea McFarlane
+- Section: 01
 
 ## Explanations
 
-### calibration
+### prediction
 
-After watching the original estimated I noticed the forward pod's estimate was further than where the robot stopped and the strafe pod estimate was earlier than where the robot stopped. To find the right estimate i slowly decreased the forward in/tick and slowly increased the  strafe in/tick and tested it with each increase and decrease.
+If the forward pod scale is too large then the robot's estimated forward distance will be too high. If the strafe pod scale is too small then the robot's estimated sideways distance will be too low.
 
+### calibration_analysis
 
-### drift
-
-Odometry can still drift even after calibration because of wheel slipping, measurement errors even if it's a really small error, uneven floors, or changes in the robot’s movement. These small errors can add up over time and make the estimated position different from the robot’s actual position.
+My prediction was mostly correct. The forward pod measured forward movement, and the strafe pod measured sideways movement. The sideways pod is needed because the robot can move sideways. Some drift can remain because of small measurement errors. The test passed with a maximum error of 1.76 inches, which was under 3 inches.
