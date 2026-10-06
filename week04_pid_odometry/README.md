@@ -1,109 +1,97 @@
-# Week 4 — PID and Odometry
+# Week 4: PID Control and Odometry
 
-This lab is a local Streamlit activity for exploring two core robotics ideas:
+This is an individual, self-contained Streamlit lab. ROS 2 and Docker are not required.
 
-- **PID control:** how proportional, integral, and derivative terms change a robot's response to tracking error.
-- **Odometry:** how a robot estimates position and heading from wheel motion, and how small errors accumulate over time.
+Students first complete guided visual activities about feedback control, PID terms, encoders, wheel geometry, and odometry. They then complete three missions:
 
-Students run the lab on their own computer, tune controllers, inspect simulated motion, and export submission files for an instructor to review.
+1. Tune PID controllers for a two-link robot arm.
+2. Calibrate forward and sideways odometry pods on a holonomic robot.
+3. Plan and tune a sidewalk-delivery route that meets waypoint, tracking, and pedestrian-clearance requirements.
 
-## Run Locally
+## Start the lab
 
-From the repository root:
+Open a terminal in the repository root. The launcher creates a Lab 4 virtual environment, installs the tested package versions, runs a preflight check, and starts Streamlit.
 
-```bash
-python3 -m venv .venv
-source .venv/bin/activate
-python -m pip install --upgrade pip
-python -m pip install -r requirements.txt
-streamlit run week04_pid_odometry/app.py
-```
-
-On Windows PowerShell, activate the virtual environment with:
+### Windows PowerShell
 
 ```powershell
-.\.venv\Scripts\Activate.ps1
+powershell.exe -NoProfile -ExecutionPolicy Bypass -File ".\week04_pid_odometry\run_lab.ps1"
 ```
 
-Then run the same `pip` commands and the Streamlit command below. Streamlit prints a local URL, usually `http://localhost:8501`, which opens the lab in a browser.
+### macOS or Linux
 
 ```bash
-streamlit run week04_pid_odometry/app.py
+bash week04_pid_odometry/run_lab.sh
 ```
 
-## Local Only
+Open the URL printed by Streamlit, normally <http://localhost:8501>.
 
-This lab is intended for local classroom and homework use. It is **not intended for Streamlit Community Cloud hosting**.
+The launcher requires Python 3.12 or newer inside **this lab's** `.venv`; `python --version` outside the environment does not describe the interpreter the lab uses. It stops before package installation if an existing environment is too old. Copy `student_submission` first, then rename only `week04_pid_odometry/.venv` and rerun the launcher. Do not rename or delete `student_submission`. Streamlit's optional first-run email prompt is not a course requirement.
 
-Reasons:
+The first page of the guide includes an environment check. Do not begin the tutorial until every check passes.
 
-- Student work is generated on the machine running the app.
-- Streamlit Cloud's server filesystem should not be treated as durable class storage.
-- A hosted class-wide submission workflow would need an external backend such as an LMS, database, object store, or form service.
-- Local runs make it easier for students to inspect generated files and for instructors to collect exact artifacts.
+## Manual setup fallback
 
-For more detail, see [LOCAL_ONLY.md](LOCAL_ONLY.md).
-
-## Submissions
-
-Students complete the lab locally. At each passed mission they can attach multiple
-GIFs of their interactive work, then use **Save to submissions folder** to collect
-the GIFs, written answers, settings, plots, and data under `student_submission/`.
-
-A typical downloaded submission may include:
-
-- `submission.json` with settings, scores, and metadata
-- `explanation.md` with the student's written answers
-- `baseline_trials.csv`, `pid_run.csv`, and `odometry_run.csv`
-- `baseline_plot.png`, `pid_plot.png`, and `odometry_plot.png`
-- `manifest.json` describing the files in the export
-- `activity_gifs/*.gif` showing the interactive activities
-
-After the final export, students commit and push that folder and submit the GitHub
-commit link:
+If the launcher cannot be used, create and activate a Python 3.12 virtual environment, then run these commands from the repository root:
 
 ```bash
-git add student_submission
-git commit -m "Submit PID and odometry lab"
+python -m pip install -r week04_pid_odometry/requirements.txt
+python week04_pid_odometry/app.py --preflight
+python -m streamlit run week04_pid_odometry/app.py
+```
+
+On Windows, the virtual-environment Python is usually `.venv\Scripts\python.exe`. On macOS and Linux it is usually `.venv/bin/python`.
+
+## Saving and recovery
+
+The guide automatically saves written responses, mission state, compact run results, and generated GIF evidence under:
+
+```text
+week04_pid_odometry/student_submission/
+```
+
+If the browser, Streamlit, or the computer closes, start the lab again with the same launcher. Compatible saved work is restored automatically, and the sidebar reports what was recovered.
+
+Written answers are retained separately from the visible page widgets. Autosave keeps previous valid response and mission-progress snapshots (`autosave/responses.bak` and `autosave/progress.bak`) and archives a recovery copy if an answer is removed. If a saved file cannot be read and no valid backup exists, the app refuses to overwrite it. Preserve the whole folder and ask for help; do not reset the repository to try to recover it. After all missions pass, **Review saved work** in the sidebar lets you revisit tutorial pages and any mission without starting again. The final readiness page names missing written responses.
+
+Changing a controller, calibration, route, or other relevant result after a mission check invalidates that check. Run the mission check again before submitting.
+
+## Student workflow
+
+1. Run the environment check.
+2. Complete every guided tutorial section in order.
+3. Write each prediction before opening its mission activity.
+4. Run the activity, inspect the measured result, and compare it with the prediction.
+5. Use each mission checklist to identify any unfinished requirement.
+6. Save each passed mission to unlock the next mission.
+7. Complete the final reflection and submission-readiness checklist.
+8. Save the complete submission folder.
+
+## Submission
+
+The final submission contains structured JSON, CSV evidence, written explanations, the individual reflection, GIF evidence when available, and a versioned `manifest.json`.
+
+From the repository root, commit only after the final readiness table reports that every requirement is ready:
+
+```bash
+git add week04_pid_odometry/student_submission
+git commit -m "Submit Week 4 PID and odometry lab"
 git push
 ```
 
-The ZIP controls remain available as backup exports.
+Submit the URL of that individual Git commit. Do not submit only a screenshot or a link to the repository homepage.
 
-## What Students Learn
+## Updating without losing work
 
-By the end of the lab, students should be able to:
+Before fetching course changes, stop the lab and copy both Lab 4 and Lab 5 `student_submission` folders somewhere outside the repository. Run `git status --short`, then commit your own work in your personal fork. Follow the repository update procedure in [`ROS_DOCKER_SETUP.md`](../ROS_DOCKER_SETUP.md). If Git reports a conflict, stop and ask for help; do not use `git reset --hard` or overwrite a submission folder. After updating, restart the lab and verify that the recovered answers and mission evidence appear before editing anything.
 
-- Describe the role of the P, I, and D terms in a feedback controller.
-- Predict what happens when gains are too small, too large, or poorly balanced.
-- Compare overshoot, settling time, steady-state error, and oscillation across controller settings.
-- Explain how wheel encoder measurements can be integrated into an odometry estimate.
-- Identify why odometry drifts when wheel radius, track width, timing, or sensor readings are imperfect.
-- Connect controller quality to odometry quality: a poorly tuned controller can create motion that is harder to estimate and verify.
-- Use plots, replayed motion, and exported run data to justify a control design.
+## Instructor verification
 
-## Suggested Student Workflow
+Run the automated checks from the repository root:
 
-1. Start with the default controller and observe the baseline motion.
-2. Change one PID gain at a time and record what changes.
-3. Compare the desired path with the estimated odometry path.
-4. Look for drift, overshoot, oscillation, and steady-state error.
-5. Tune the controller until the robot follows the target more reliably.
-6. Write a short explanation connecting the chosen gains to the observed behavior.
-7. Save the submission folder, commit it, push it, and submit the GitHub commit link.
+```bash
+python -m unittest discover -s week04_pid_odometry/tests -v
+python week04_pid_odometry/app.py --smoke-test
+```
 
-## Instructor Notes
-
-Keep collection outside Streamlit unless a dedicated backend has been added. For workshops, the simplest reliable flow is:
-
-1. Students clone or download the repo.
-2. Students run the Streamlit lab locally.
-3. Students save their completed artifacts under `student_submission/`.
-4. Students commit and push that folder, then submit the GitHub commit link.
-
-This keeps grading artifacts tied to each student and avoids relying on temporary server-side files.
-
-
-## Required final reflection
-
-After the technical work, complete the individual [final reflection](../FINAL_REFLECTION.md). Respond to any or all of the five prompts in 1–300 words. A blank response or a response over 300 words cannot finalize the submission. The app saves the response as `student_submission/final_reflection.md`, separate from technical syntheses and mission explanations.
+Instructor controls in the sidebar can jump to tutorial pages or missions without changing the normal student sequence.
