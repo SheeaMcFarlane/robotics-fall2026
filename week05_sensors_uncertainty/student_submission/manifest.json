@@ -1,0 +1,36 @@
+{
+  "files": {
+    "autosave/responses.json": "1791d8fa6e458aab56e225e275fafaf59537a7ae77f8131daa6736434879538c",
+    "autosave/responses.md": "355175aa32812862eb80b079e1a17fd4ecdee504a1b62940b0db908f948ee908",
+    "autosave/responses.recovery.b414434370b048f5b86faaf9d3625d2f.json": "6e7706f5eee3346ec52013b644fb843756053dccfd716dcf581a35edc1d9df8a",
+    "autosave/responses.recovery.f7bca9b8e3aa4f3db2c58ee7773b60d3.json": "dae2f3736a71b15fd5fca78b2e15df5b126dfd581c755af76c58aa3552c44ecb",
+    "final_reflection.md": "4a3478b98d15e2578aebd2757dd5df50bea774373337b065fe0cc8e5295f5b36",
+    "final_synthesis.md": "f41173a27bf52756f1e316e8a7704aa629ef6b8fa31413097de1aade179bea77",
+    "mission_1/evidence.png": "77066b35f4b5ad95d72c24eac8ad610c8206a383d623f018e8538aa2ad38ca6e",
+    "mission_1/explanation.md": "d72df01b0cf9bb0faf0ef2f9338669779d500dc76728791f53549b65d4f177e1",
+    "mission_1/measurements.csv": "3cd40da9d947df24bd826632ed8f23fcb0873baa3d0fe903d48e1d991ede59b5",
+    "mission_1/submission.json": "a40056d19799fa6be933ceb07b9972311168e08566eef75ee5d5dd425265c671",
+    "mission_2/evidence.png": "f11ba7cddaa72e564e19c28b5f13a32aef459a1ebb8c94670352f7db281cc454",
+    "mission_2/explanation.md": "2c4514dec127be92a0f3b0ab60dde1cc9eded00f6936c81a99f49f95714ff1c4",
+    "mission_2/measurements.csv": "0d84f4d4e05faaff7caea905b7dbd48ff9fa0f52c8f508835fb682bb95d820cd",
+    "mission_2/submission.json": "291f0ca66e104924b0a50e2f9381d2c6767be99d1c7b5cc62cc1b722f03d8317",
+    "mission_3/explanation.md": "16a7168cb1d03e6612e6505b5588642fd61b3b7ca2206996c4c80c7ac31127b1",
+    "mission_3/measurements.csv": "b92529377d60b44a2f0e05ba07df16e11cebbec13183b61c803c0bf1170dda43",
+    "mission_3/submission.json": "262a958eac7262aa44f328d6f3275f97e5606cd9ec9939f3b182898805e02291",
+    "student.json": "208cf217e62dd354d02d6fbfa21a7e85bdbcfa38308ee25daa8be7f9d8a15049"
+  },
+  "generated_at": "2026-10-09T23:59:52.841525+00:00",
+  "lab_id": "week05_sensors_uncertainty",
+  "mission_signatures": {
+    "mission_1": "493f91f9fc0b0e94",
+    "mission_2": "35180d06689b2374",
+    "mission_3": "d4251b9649ce43ab"
+  },
+  "response_signature": "62ccf0fdd3e0e5ad",
+  "schema_version": 2,
+  "student": {
+    "course_id": "CSCI 39536 01",
+    "email": "sheea.mcfarlane68@login.cuny.edu",
+    "name": "Sheea McFarlane"
+  }
+}

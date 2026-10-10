@@ -1,0 +1,82 @@
+{
+  "checked_evidence_ids": {
+    "mission_1": "493f91f9fc0b0e94"
+  },
+  "completed_missions": [
+    "mission_1"
+  ],
+  "content_version": 2,
+  "identity_locked": true,
+  "lab_id": "week05_sensors_uncertainty",
+  "legacy_evidence": {},
+  "mission_2_attempts": [],
+  "mission_2_controls": {
+    "alpha": 0.35,
+    "method": "Moving average",
+    "weight_a": 0.25,
+    "window": 3
+  },
+  "mission_3_attempts": {},
+  "mission_3_controls": {},
+  "mission_3_results": {},
+  "prediction_locks": {
+    "mission_1": {
+      "settings": {
+        "seed": 2532376961
+      },
+      "text": "For biased sensor, the readings will be tightly grouped together but progressively shift away from the target. This would result in a high bias, a mean that is significantly different from 2.00 m, and a low variance. However for a noisy sensor the readings will be scattered and unstable, fluctuating randomly both above and below the target. This will result in low bias, a mean that's really close to 2.00m and high variance."
+    },
+    "mission_2": {
+      "settings": {
+        "alpha": 0.35,
+        "method": "Moving average",
+        "weight_a": 0.25,
+        "window": 7
+      },
+      "text": "Window 7 with Weight A = 0.25 is cleaner but slower than Window 3, and steadier but less responsive than setups favoring Sensor A."
+    }
+  },
+  "responses": {
+    "concepts.observation": "The changes that occurs when there was an increase in versus bias are increases in variance, decrease in standard_deviation, and a decrease in outliers. ",
+    "mission_1.bias": "0.010",
+    "mission_1.bias_vs_variance": "My predication was correct for the most part. The stats show that the bias is as low as +0.010 m, with a mean of 2.010 which is close to the target 2.00m.  This shows that the sensor does not consistently measure too high or  too low. The variance of 0.0367 m^2 shows that the readings have some noise and are not always consistent. The bias measure how far the average reading is from the target, while variance measures how spread out the readings are. So a sensor can have low bias but still have noisy readings.",
+    "mission_1.dropouts": "3",
+    "mission_1.mean": "2.010",
+    "mission_1.median": "1.990",
+    "mission_1.more_samples": "More samples would not remove the sensor's main problem because the readings are noisy and inconsistent. Although more samples could make the average more reliable , more samples would not eliminate the variance, outliers, or dropouts. In order for it to produces more consistent and reliable measurements the sensor would need improvements. ",
+    "mission_1.outliers": "4",
+    "mission_1.prediction": "For biased sensor, the readings will be tightly grouped together but progressively shift away from the target. This would result in a high bias, a mean that is significantly different from 2.00 m, and a low variance. However for a noisy sensor the readings will be scattered and unstable, fluctuating randomly both above and below the target. This will result in low bias, a mean that's really close to 2.00m and high variance.",
+    "mission_1.prediction_draft": "For biased sensor, the readings will be tightly grouped together but progressively shift away from the target. This would result in a high bias, a mean that is significantly different from 2.00 m, and a low variance. However for a noisy sensor the readings will be scattered and unstable, fluctuating randomly both above and below the target. This will result in low bias, a mean that's really close to 2.00m and high variance.\n",
+    "mission_1.profile": "noisy",
+    "mission_1.robot_consequence": "One robot decision this imperfection could change is how close the robot gets to a pedestrian. Noisy readings or outliers could make the robot misjudge the distance and can cause to get too close to the person. This could put the pedestrian at risk of being hit and because the robot needs to move safely it needs a more reliable sensor.",
+    "mission_1.variance": "0.0367",
+    "mission_2.comparison": "",
+    "mission_2.fusion_choice": "",
+    "mission_2.manual_average": "4.17",
+    "mission_2.manual_fusion": "2.25",
+    "mission_2.manual_median": "2.3",
+    "mission_2.prediction_draft": "Window 7 with Weight A = 0.25 is cleaner but slower than Window 3, and steadier but less responsive than setups favoring Sensor A.",
+    "mission_2.responsiveness": ""
+  },
+  "reviewed_walkthroughs": [
+    0,
+    1,
+    2,
+    3
+  ],
+  "schema_version": 2,
+  "stage": "mission_2",
+  "student": {
+    "course_id": "CSCI 39536 01",
+    "email": "sheea.mcfarlane68@login.cuny.edu",
+    "name": "Sheea McFarlane"
+  },
+  "updated_at": "2026-10-09T16:30:07.525718+00:00",
+  "visited_stages": [
+    "intro",
+    "concepts",
+    "mission_1",
+    "mission_2"
+  ],
+  "walkthrough_index": 3
+}
