@@ -1,0 +1,23 @@
+{
+  "schema_version": 1,
+  "captured_at": "2026-10-16T17:24:42.700798+00:00",
+  "strategy": "room_by_room",
+  "duration_minutes": 7.0,
+  "map_yaml": "map.yaml",
+  "map_image": "map.pgm",
+  "metrics": {
+    "width": 113,
+    "height": 113,
+    "resolution": 0.05,
+    "map_area_m2": 31.922500000000003,
+    "known_fraction": 0.6912052627457123,
+    "unknown_fraction": 0.30879473725428774,
+    "occupied_fraction": 0.08489310047771947,
+    "free_fraction": 0.6063121622679928,
+    "occupied_components": 32,
+    "largest_component_cells": 649,
+    "speckle_fraction": 0.01845018450184502,
+    "border_contact_fraction": 0.017857142857142856
+  },
+  "quality_score": 94.6
+}

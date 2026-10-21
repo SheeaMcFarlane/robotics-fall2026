@@ -1,0 +1,30 @@
+{
+  "schema_version": 1,
+  "lab_id": "week06_slam_localization",
+  "mission_id": "mission_1",
+  "saved_at": "2026-10-16T16:36:53.214372+00:00",
+  "evidence": {
+    "evidence_id": "14a4b6306145cbd9",
+    "schema_version": 1,
+    "captured_at": "2026-10-16T15:59:40.978659+00:00",
+    "strategy": "perimeter_then_interior",
+    "duration_minutes": 7.0,
+    "map_yaml": "map.yaml",
+    "map_image": "map.pgm",
+    "metrics": {
+      "width": 113,
+      "height": 104,
+      "resolution": 0.05,
+      "map_area_m2": 29.380000000000003,
+      "known_fraction": 0.7263444520081688,
+      "unknown_fraction": 0.27365554799183117,
+      "occupied_fraction": 0.06518039482641252,
+      "free_fraction": 0.6611640571817563,
+      "occupied_components": 49,
+      "largest_component_cells": 179,
+      "speckle_fraction": 0.05221932114882506,
+      "border_contact_fraction": 0.11627906976744186
+    },
+    "quality_score": 82.0
+  }
+}
