@@ -1,0 +1,7 @@
+# mission_1
+
+## diagnosis
+In normal_1, the box is on the mug. The mask shows the mug as white and most of the wood desk as black, because the desk is brighter than my value limit of 131. The mug’s region is the biggest one that passes the filters, so it gets selected. The setting that makes this work is the value range of 19 to 131, which keeps the mug’s dark pixels and drops the bright wood. In dim_1, the box is not on the mug. The whole picture is darker, so the desk now falls inside that same value range and turns white in the mask. The desk, mug and surroundings join into one huge region, and the detector picks it because it is the biggest, so the green box covers almost the whole image. My rule was tuned to normal lighting, so a change in brightness broke it.
+
+## limitations
+The one parameter I changed that mattered most was the value maximum, which I lowered to 131. This removed the bright wood from the mask, so the mug no longer merged with the desk and the box shrank from the mug plus desk to just the mug. The limitation is that the rule only matches a color and brightness range and has no idea what a mug is. A different cup, such as a white or brightly colored one, could fall outside my range and be missed. A different background, such as dark or brown, could pass the same rule and win because it is bigger. The test results show this too: the box precision was only about 0.42, meaning many reported boxes were not on the cup.

@@ -1,0 +1,32 @@
+[
+  {
+    "camera_wait_steps": 1,
+    "elapsed_sim_seconds": 218.33,
+    "line_loss_events": 1,
+    "mean_absolute_image_error_when_visible": 0.048981252202044585,
+    "outcome": "interrupted",
+    "recorded_steps": 2259,
+    "visited_colors": [],
+    "world": "practice"
+  },
+  {
+    "camera_wait_steps": 6,
+    "elapsed_sim_seconds": 187.28,
+    "line_loss_events": 0,
+    "mean_absolute_image_error_when_visible": 0.48463989110274547,
+    "outcome": "complete",
+    "recorded_steps": 1988,
+    "visited_colors": [],
+    "world": "track"
+  },
+  {
+    "camera_wait_steps": 2,
+    "elapsed_sim_seconds": 217.58,
+    "line_loss_events": 1,
+    "mean_absolute_image_error_when_visible": 0.6453408527983053,
+    "outcome": "interrupted",
+    "recorded_steps": 2308,
+    "visited_colors": [],
+    "world": "track"
+  }
+]
