@@ -1,0 +1,16 @@
+{
+  "status": "no_path",
+  "error": "",
+  "planning_s": 3.92090000218559e-05,
+  "expanded": 15,
+  "peak_frontier": 6,
+  "path": [],
+  "path_length_m": 0.0,
+  "optimal_length_m": 0.0,
+  "optimality_ratio": null,
+  "case": "Disconnected goal",
+  "planner": "bfs",
+  "source_sha256": "c50b8e2d36e6ab827ef03f984e56402a3108b2f3fa70ca136a1f7bab974c3dc9",
+  "expected_status": "no_path",
+  "check_passed": true
+}

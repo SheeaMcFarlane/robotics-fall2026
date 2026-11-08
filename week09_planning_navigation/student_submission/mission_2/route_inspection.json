@@ -1,0 +1,14 @@
+{
+  "run_id": "constrained_astar_0_baseline_23d33df8fb",
+  "map": "constrained",
+  "planner": "astar",
+  "sample": 0,
+  "point": {
+    "t": 1.6,
+    "x": -3.875000000000034,
+    "y": -2.875000000000257,
+    "speed_mps": 5.456574134585326e-14
+  },
+  "tracking_error_m": 2.5939143925458134e-13,
+  "feature": "Turn"
+}
