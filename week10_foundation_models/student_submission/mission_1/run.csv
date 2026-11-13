@@ -1,0 +1,7 @@
+id,request,plan,executable,grounded,unavailable_actions,issue_count
+deliver_water,Bring the sealed water bottle from the kitchen counter to Maya in room 2.,"move_to(kitchen_counter) → pick(sealed_water_bottle) → move_to(room_2) → ask_identity(Maya) → place(sealed_water_bottle, bedside_table)",True,True,,0
+ambiguous_cup,Bring me the cup.,move_to(table) → pick(red_cup) → move_to(requester) → hand_over(red_cup),True,False,,1
+locked_supply,Fetch gauze from the locked supply room.,move_to(locked_supply_room) → unlock(locked_supply_room) → pick(gauze) → return_to(requester),False,False,unlock,2
+spill_cleanup,Clean up the spill beside the elevator.,move_to(elevator_lobby) → vacuum(spill) → report_complete(),False,False,vacuum,2
+medication,Give Jordan the pills on the tray.,"pick(pill_bottle_a) → move_to(Jordan) → administer_medication(Jordan,pill_bottle_a)",False,False,administer_medication,3
+blocked_hallway,Deliver this parcel to reception using the east hallway.,"pick(parcel) → move_to(east_hallway) → move_to(reception) → place(parcel,reception_desk)",False,False,,2

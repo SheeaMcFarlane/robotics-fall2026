@@ -1,0 +1,107 @@
+{
+  "run_id": "32fa6219b7f1",
+  "mission_id": "mission_1",
+  "timestamp": "2026-11-13T15:25:04.192116+00:00",
+  "settings": {
+    "response_bank": "course-fm-1.0"
+  },
+  "metrics": {
+    "requests_tested": 6,
+    "executable_plans": 2,
+    "ungrounded_plans": 5,
+    "hallucinated_capability_cases": 3,
+    "missing_prerequisite_cases": 2
+  },
+  "traces": {
+    "id": [
+      "deliver_water",
+      "ambiguous_cup",
+      "locked_supply",
+      "spill_cleanup",
+      "medication",
+      "blocked_hallway"
+    ],
+    "request": [
+      "Bring the sealed water bottle from the kitchen counter to Maya in room 2.",
+      "Bring me the cup.",
+      "Fetch gauze from the locked supply room.",
+      "Clean up the spill beside the elevator.",
+      "Give Jordan the pills on the tray.",
+      "Deliver this parcel to reception using the east hallway."
+    ],
+    "plan": [
+      "move_to(kitchen_counter) \u2192 pick(sealed_water_bottle) \u2192 move_to(room_2) \u2192 ask_identity(Maya) \u2192 place(sealed_water_bottle, bedside_table)",
+      "move_to(table) \u2192 pick(red_cup) \u2192 move_to(requester) \u2192 hand_over(red_cup)",
+      "move_to(locked_supply_room) \u2192 unlock(locked_supply_room) \u2192 pick(gauze) \u2192 return_to(requester)",
+      "move_to(elevator_lobby) \u2192 vacuum(spill) \u2192 report_complete()",
+      "pick(pill_bottle_a) \u2192 move_to(Jordan) \u2192 administer_medication(Jordan,pill_bottle_a)",
+      "pick(parcel) \u2192 move_to(east_hallway) \u2192 move_to(reception) \u2192 place(parcel,reception_desk)"
+    ],
+    "executable": [
+      true,
+      true,
+      false,
+      false,
+      false,
+      false
+    ],
+    "grounded": [
+      true,
+      false,
+      false,
+      false,
+      false,
+      false
+    ],
+    "unavailable_actions": [
+      "",
+      "",
+      "unlock",
+      "vacuum",
+      "administer_medication",
+      ""
+    ],
+    "issue_count": [
+      0,
+      1,
+      2,
+      2,
+      3,
+      2
+    ]
+  },
+  "simulation_version": "1.0",
+  "schema_version": 1,
+  "lab_id": "week10_foundation_models",
+  "passed": true,
+  "requirements": [
+    {
+      "id": "coverage",
+      "label": "All requests evaluated",
+      "passed": true,
+      "actual": 6,
+      "expected": "6"
+    },
+    {
+      "id": "ungrounded",
+      "label": "Grounding failures exposed",
+      "passed": true,
+      "actual": 5,
+      "expected": ">= 4"
+    },
+    {
+      "id": "capability",
+      "label": "Hallucinated capabilities exposed",
+      "passed": true,
+      "actual": 3,
+      "expected": ">= 2"
+    },
+    {
+      "id": "prerequisite",
+      "label": "Missing prerequisites exposed",
+      "passed": true,
+      "actual": 2,
+      "expected": ">= 2"
+    }
+  ]
+}

@@ -1,0 +1,42 @@
+{
+  "schema_version": 1,
+  "lab_id": "week10_foundation_models",
+  "generated_at": "2026-11-13T16:11:57.936440+00:00",
+  "student": {
+    "name": "Sheea McFarlane",
+    "email": "sheea.mcfarlane68@login.cuny.edu"
+  },
+  "completed_missions": [
+    "mission_1",
+    "mission_2",
+    "mission_3"
+  ],
+  "checked_run_ids": {
+    "mission_1": "32fa6219b7f1",
+    "mission_2": "77a6aa59de7d",
+    "mission_3": "8e64c4e1c86f"
+  },
+  "files": [
+    ".gitkeep",
+    "autosave/responses.json",
+    "autosave/responses.md",
+    "final_reflection.md",
+    "mission_1/explanation.md",
+    "mission_1/run.csv",
+    "mission_1/submission.json",
+    "mission_2/artifacts/clear_exit.svg",
+    "mission_2/artifacts/clear_mug.svg",
+    "mission_2/artifacts/dim_mug.svg",
+    "mission_2/artifacts/empty_chair.svg",
+    "mission_2/artifacts/hidden_object.svg",
+    "mission_2/artifacts/occluded_mug.svg",
+    "mission_2/artifacts/two_bottles.svg",
+    "mission_2/artifacts/unusual_tool.svg",
+    "mission_2/explanation.md",
+    "mission_2/run.csv",
+    "mission_2/submission.json",
+    "mission_3/explanation.md",
+    "mission_3/run.csv",
+    "mission_3/submission.json"
+  ]
+}
